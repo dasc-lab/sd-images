@@ -85,6 +85,29 @@ ping google.com
 ## Adding SSH access
 1. Determine the ip address of the raspi: `ip a` which has a field `wlan0` : `inet` and gives you the ip address
 2. Check if ssh access is working. On a different computer access it by typing ```ssh ubuntu@<ip address found above>``` and use the password of the computer
+3. If this didnt work, you might need to install `openssh-server` by doing `sudo apt install openssh-server`
+
+## Update, upgrade and reboot
+1.
+```
+sudo reboot
+```
+2. 
+```
+sudo apt-get update && sudo apt-get upgrade
+```
+dont forget to hit yes before you go for lunch.
+3. 
+```
+sudo reboot
+```
+
+## Adding a Lightweight Desktop Environment
+Follow these stepos:
+
+
+## Install ROS
+
 
 
 
