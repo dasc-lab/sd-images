@@ -138,28 +138,29 @@ sudo cp <location of u-boot repo>/u-boot.bin /boot/firmware/uboot_rpi_4.bin
 The raspi should still reboot correctly
 
 
-## Disable Bluetooth/Enable Serial 0
+## Disable Bluetooth/Enable Serial 0/Change udev rules
 References: JPL: https://github.com/nasa-jpl/osr-rover-code/blob/foxy-devel/setup/rpi.md#5-setting-up-serial-communication-on-the-rpi
+
 References: Summary: https://askubuntu.com/questions/1254376/enable-uart-communication-on-pi4-ubuntu-20-04
 
-
-
-
-1. Read what the boot steps are by checking the file `/boot/firmware/README`. In this readme it says the steps are:
-- `bootcode.bi`
-- `config.txt`
-- `syscfg.txt`
-- `usercfg.txt`
-- ...
-(which are all files in `/boot/firmware/`
-essentially we will be checking and modifying the three `.txt` files
-2. Check `config.txt`:
-- it should have `enable uart=1`
-3. Check `syscfg.txt`:
-- it should have `enable uart=1` (but you should not be modifying this file)
-4. check `usercfg.txt`:
-- this is the file we modify
-- 
+1. Disable serial-getty@ttyS0.service
+```
+sudo systemctl stop serial-getty@ttyS0.service
+sudo systemctl disable serial-getty@ttyS0.service
+sudo systemctl mask serial-getty@ttyS0.service
+```
+2. Setup udev rules: put below content in *new* file `/etc/udev/rules.d/10-local.rules`
+```
+KERNEL=="ttyS0", SYMLINK+="serial0" GROUP="tty" MODE="0660"
+KERNEL=="ttyAMA0", SYMLINK+="serial1" GROUP="tty" MODE="0660"
+```
+Reload udev rules: `sudo udevadm control --reload-rules && sudo udevadm trigger`
+4. Add user to tty group: `sudo adduser ubuntu tty`
+5. Delete substring `console=serial0,115200` from `/boot/firmware/cmdline.txt`
+6. (DONT DO THIS STEP) Add newline `dtoverlay=disable-bt` to `/boot/firmware/config.txt` (I put it right under the `cmdline=cmdline.txt` line)
+7. Change `/boot/firmware/usercfg.txt` and include the line `dtoverlay=pi3-disable-bt` (note, its pi3 not pi4!)
+8. Restart
+9. If you `ls /dev/` you should now see `serial0` and `serial1`
 
 
 Btw `raspi-config` didnt work for us. Even after we force installed it
@@ -216,4 +217,4 @@ sudo bash ./install_geographiclib_datasets.sh
 ## Testing
 1. Connect the pixhawk using UART cables
 2. power on the raspi
-3. 
+3. `roslaunch mavros px4.launch fcu_url:=/dev/serial0:921600` and it shouldnt show any new issues!
