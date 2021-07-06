@@ -218,3 +218,18 @@ sudo bash ./install_geographiclib_datasets.sh
 1. Connect the pixhawk using UART cables
 2. power on the raspi
 3. `roslaunch mavros px4.launch fcu_url:=/dev/serial0:921600` and it shouldnt show any new issues!
+
+
+## Saving
+The sd card image at the end of these steps were saved by running the commands
+```
+sudo dd if=/dev/sdd of=~/Devansh/raspi4_backup.img bs=4M status=progress
+```
+on a different computer when the sd card was plugged in
+
+This `.img` file is uploaded in this repo, and can be cloned for a direct copy in the future
+
+using GZIP :
+```
+sudo dd bs=10M status=progress if=/dev/sdd | gzip -c --fast > ~/Devansh/raspi4_backup.img 
+```
