@@ -195,6 +195,10 @@ sudo rosdep init
 rosdep update
 ```
 
+```
+sudo apt install ros-noetic-rosbash
+```
+
 ## Install MAVROS
 
 Install mavros and other dependencies
