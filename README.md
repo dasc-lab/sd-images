@@ -24,18 +24,11 @@ and possibly more text - you can usually ignore this additional text.
 To log in, use the username `ubuntu` and password `ubuntu`. You will need to change the passsword on the first boot. 
 
 ## Adding internet
-1. 
-```
-cd /etc/netplan/
-```
-2. edit a file, which contains the network information
-```
-sudo vim 50-cloud-init.yaml
-```
-vim or nano, based on what you are used to. 
+1. `cd /etc/netplan/`
+2. edit the file which contains network info: `sudo nano 50-cloud-init.yaml`
 3. Add in an interface to connect to a wifi network
 
-my final file looks like (when with a password)
+My final file looks like (when with the network has a password)
 ```
 # a bunch of comments
 network:
@@ -81,6 +74,7 @@ this should enable wifi on the raspi. you can test it by doing
 ```
 ping google.com
 ```
+Note, this also means that you can no longer change the network from a gui. If you want to change the wifi the raspi is connected to, change the netplan file appropriately.
 
 ## Adding SSH access
 1. Determine the ip address of the raspi: `ip a` which has a field `wlan0` : `inet` and gives you the ip address
