@@ -96,7 +96,9 @@ When the raspi is turned on, it
 3. `sudo apt-get install slim`
 4. `sudo tasksel install ubuntu-mate-core` (this step takes a while)
 5. `sudo reboot`
-6. log in using the correct username and password
+7. log in using the correct username and password
+
+To disable or enable the gui, press one of `Ctrl + Alt + F1` or `Ctrl + Alt + F2` or `Ctrl + Alt + F3` . I think the first one worked for me.
 
 
 ## Install ROS NOETIC
@@ -127,3 +129,4 @@ sudo apt-get install ros-noetic-mavros* -y
 wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh
 sudo bash ./install_geographiclib_datasets.sh
 ```
+
