@@ -2,7 +2,7 @@
 images and instructions for loading Ubuntu onto a sd card, for use in Jetson Nanos and Raspberry Pis
 
 
-## Flashing a new SD card for Ubuntu server on Raspi 4b
+## Flashing a new SD card for Ubuntu server 20.04 on Raspi 4B
 
 On a host computer
 1. Download and install the Raspi Imager (https://www.raspberrypi.org/software/) on a host machine
@@ -88,27 +88,49 @@ ping google.com
 3. If this didnt work, you might need to install `openssh-server` by doing `sudo apt install openssh-server`
 
 ## Update, upgrade and reboot
-1.
-```
-sudo reboot
-```
-2. 
-```
-sudo apt-get update && sudo apt-get upgrade
-```
+1. `sudo reboot`
+2. `sudo apt-get update && sudo apt-get upgrade`
 dont forget to hit yes before you go for lunch.
-3. 
+3. `sudo reboot`
+
+## Change the name of the computer
+1. `sudo vim /etc/hostname`
+2. change the word `ubuntu` to the desired name of the computer. The username is still `ubuntu` and when ssh-ing in, you still use `ubuntu@<ip address>`
+
+## Disable the uBOOT
+When the raspi is turned on, it 
+
+## Adding a Lightweight Desktop Environment (Optional)
+1. sudo apt-get update && sudo apt-get upgrade
+2. `sudo apt-get install tasksel`
+3. `sudo apt-get install slim`
+4. `sudo tasksel install ubuntu-mate-core` (this step takes a while)
+5. `sudo reboot`
+6. log in using the correct username and password
+
+
+## Install ROS NOETIC
+Run all of these lines
 ```
-sudo reboot
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 ```
-
-## Adding a Lightweight Desktop Environment
-Follow these stepos:
-
-
-## Install ROS
-
-
+```
+sudo apt install curl -y
+```
+```
+curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+sudo apt update
+sudo apt install ros-noetic-desktop -y
+echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+sudo apt install python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential -y
+```
+```
+sudo rosdep init
+```
+```
+rosdep update
+```
 
 
 
