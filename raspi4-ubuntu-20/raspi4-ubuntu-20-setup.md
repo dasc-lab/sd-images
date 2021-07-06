@@ -138,8 +138,12 @@ sudo cp <location of u-boot repo>/u-boot.bin /boot/firmware/uboot_rpi_4.bin
 The raspi should still reboot correctly
 
 
-## Disable Bluetooth
-(work in progress)
+## Disable Bluetooth/Enable Serial 0
+References: JPL: https://github.com/nasa-jpl/osr-rover-code/blob/foxy-devel/setup/rpi.md#5-setting-up-serial-communication-on-the-rpi
+References: Summary: https://askubuntu.com/questions/1254376/enable-uart-communication-on-pi4-ubuntu-20-04
+
+
+
 
 1. Read what the boot steps are by checking the file `/boot/firmware/README`. In this readme it says the steps are:
 - `bootcode.bi`
@@ -208,3 +212,8 @@ wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/inst
 sudo bash ./install_geographiclib_datasets.sh
 ```
 
+
+## Testing
+1. Connect the pixhawk using UART cables
+2. power on the raspi
+3. 
