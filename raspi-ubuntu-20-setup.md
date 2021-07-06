@@ -114,9 +114,16 @@ sudo apt install python3-rosdep python3-rosinstall python3-rosinstall-generator 
 (this step take some time)
 
 ```
+sudo apt install python3-rosdep2 -y
 sudo rosdep init
 rosdep update
 ```
 
+## Install MAVROS
 
-
+Install mavros and other dependencies
+```
+sudo apt-get install ros-noetic-mavros* -y
+wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh
+sudo bash ./install_geographiclib_datasets.sh
+```
