@@ -88,7 +88,44 @@ dont forget to hit yes before you go for lunch.
 2. change the word `ubuntu` to the desired name of the computer. The username is still `ubuntu` and when ssh-ing in, you still use `ubuntu@<ip address>`
 
 ## Disable the uBOOT
-When the raspi is turned on, it 
+When the raspi is turned on, it first goes into a `uBOOT` mode, where it is waiting to check if the user sends any keyboard commands. if the user does, it goes into a safe mode, allowing you to make modifications. However, for our applications, we will be connecting the pixhawk using UART connections. Unfortunately, these messages also go to the same place, and therefore the bootloader gets interrupted at boot. We need to disable this. The description here is a copy of the steps listed at https://stackoverflow.com/questions/34356844/how-to-disable-serial-consolenon-kernel-in-u-boot/64583919#64583919
+
+
+1. `sudo apt install git make gcc gcc-aarch64-linux-gnu`
+2. `git clone --depth 1 git://git.denx.de/u-boot.git`
+3. `cd u-boot`
+4. "Find your board config files - they depend on the model, e.g. rpi_3_defconfig for Raspberry Pi 3, rpi_4_defconfig for Raspberry Pi 4 and so on. Add the following lines to the end of the file"
+5.
+```
+CONFIG_BOOTDELAY=-2
+CONFIG_SILENT_CONSOLE=y
+CONFIG_SYS_DEVICE_NULLDEV=y
+CONFIG_SILENT_CONSOLE_UPDATE_ON_SET=y
+CONFIG_SILENT_U_BOOT_ONLY=y
+```
+The first line removes the boot delay, so autoboot will not be interrupted by messages sent on UART interface. Next four lines enable silent boot, so U-boot will not send any messages on UART itself, because the messages might in turn confuse your device. One more little thing left, set silent boot environmental variable. Change the header file for your board (ro raspberry pi it is include/configs/rpi.h ):
+6. `make rpi_3_defconfig`
+7. `make CROSS_COMPILE=aarch64-linux-gnu-`
+8. When build process finishes you will have a u-boot.bin file, which you need to rename and copy to Raspberry Pi SD card. Now you Raspberry Pi will not be disturbed by any messages on UART during boot. The UART functionality after boot will not be affected.
+
+1. Read what the boot steps are by checking the file `/boot/firmware/README`. In this readme it says the steps are:
+- `bootcode.bi`
+- `config.txt`
+- `syscfg.txt`
+- `usercfg.txt`
+- ...
+(which are all files in `/boot/firmware/`
+essentially we will be checking and modifying the three `.txt` files
+2. Check `config.txt`:
+- it should have `enable uart=1`
+3. Check `syscfg.txt`:
+- it should have `enable uart=1` (but you should not be modifying this file)
+4. check `usercfg.txt`:
+- this is the file we modify
+- 
+
+
+Btw `raspi-config` didnt work for us. Even after we force installed it
 
 ## Adding a Lightweight Desktop Environment (Optional)
 1. sudo apt-get update && sudo apt-get upgrade
