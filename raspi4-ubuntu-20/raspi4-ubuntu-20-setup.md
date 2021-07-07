@@ -7,6 +7,7 @@
 gunzip raspi4-ubuntu20.img
 ```
 this will create a file about 32 gb big, and needs to be loaded onto a SD card at least 32 gb large.
+
 3. Open `Raspi-Imager` (https://www.raspberrypi.org/software/)
 4. Choose `Custom Image` and select the `raspi4-ubuntu20.img` file (technically you might be able to use the compressed .gz file directly, ie, skipping step 2, but it didnt work for me last time.
 5. choose the sd card, and click ok to upload it.
@@ -116,7 +117,6 @@ mv uboot_rpi_4.bin uboot_rpi_4.bin.bak
 2. `git clone --depth 1 git://git.denx.de/u-boot.git`
 3. `cd u-boot`
 4. Find your board config files, inside the `configs` folder - for this set up, we modified `rpi_4_defconfig` Add the following lines to the end of the file"
-6.
 ```
 CONFIG_BOOTDELAY=-2
 CONFIG_SILENT_CONSOLE=y
@@ -126,7 +126,7 @@ CONFIG_SILENT_U_BOOT_ONLY=y
 ```
 The first line removes the boot delay, so autoboot will not be interrupted by messages sent on UART interface. Next four lines enable silent boot, so U-boot will not send any messages on UART itself, because the messages might in turn confuse your device. 
 
-7. One more little thing left, set silent boot environmental variable. Change the header file for your board (for raspberry pi it is `include/configs/rpi.h` ). Search for `CONFIG_EXTRA_ENV_SETTINGS` and add the `"silent... ` line so that the it looks like
+5. One more little thing left, set silent boot environmental variable. Change the header file for your board (for raspberry pi it is `include/configs/rpi.h` ). Search for `CONFIG_EXTRA_ENV_SETTINGS` and add the `"silent... ` line so that the it looks like
 ```
 #define CONFIG_EXTRA_ENV_SETTINGS \
     "dhcpuboot=usb start; dhcp u-boot.uimg; bootm\0" \
@@ -136,11 +136,12 @@ The first line removes the boot delay, so autoboot will not be interrupted by me
     ENV_MEM_LAYOUT_SETTINGS \
     BOOTENV
 ```
-8. `cd` back into the u-boot folder
-9. and run `make rpi_4_defconfig`
-10. and run `make CROSS_COMPILE=aarch64-linux-gnu-` 
-11. When build process finishes you will have a `u-boot.bin` file. 
-12. Rename this file to `uboot_rpi_4.bin`, and move it to the `/boot/firmware` folder. You should probably also create a backup of the original `uboot` file:
+
+6. `cd` back into the u-boot folder
+7. and run `make rpi_4_defconfig`
+8. and run `make CROSS_COMPILE=aarch64-linux-gnu-` 
+9. When build process finishes you will have a `u-boot.bin` file. 
+10. Rename this file to `uboot_rpi_4.bin`, and move it to the `/boot/firmware` folder. You should probably also create a backup of the original `uboot` file:
 ```
 cd /boot/firmware/
 sudo mv uboot_rpi_4.bin uboot_rpi_4.bin.bak
@@ -149,7 +150,8 @@ Now copy in the new file from the github repo to the boot folder
 ```
 sudo cp <location of u-boot repo>/u-boot.bin /boot/firmware/uboot_rpi_4.bin
 ```
-13. `sudo reboot` or `sudo poweroff`
+
+11. `sudo reboot` or `sudo poweroff`
 
 The raspi should still reboot correctly
 
@@ -171,12 +173,13 @@ KERNEL=="ttyS0", SYMLINK+="serial0" GROUP="tty" MODE="0660"
 KERNEL=="ttyAMA0", SYMLINK+="serial1" GROUP="tty" MODE="0660"
 ```
 Reload udev rules: `sudo udevadm control --reload-rules && sudo udevadm trigger`
-4. Add user to tty group: `sudo adduser ubuntu tty`
-5. Delete substring `console=serial0,115200` from `/boot/firmware/cmdline.txt`
-6. (DONT DO THIS STEP) Add newline `dtoverlay=disable-bt` to `/boot/firmware/config.txt` (I put it right under the `cmdline=cmdline.txt` line)
-7. Change `/boot/firmware/usercfg.txt` and include the line `dtoverlay=pi3-disable-bt` (note, its pi3 not pi4!)
-8. Restart
-9. If you `ls /dev/` you should now see `serial0` and `serial1`
+
+3. Add user to tty group: `sudo adduser ubuntu tty`
+4. Delete substring `console=serial0,115200` from `/boot/firmware/cmdline.txt`
+5. (DONT DO THIS STEP) Add newline `dtoverlay=disable-bt` to `/boot/firmware/config.txt` (I put it right under the `cmdline=cmdline.txt` line)
+6. Change `/boot/firmware/usercfg.txt` and include the line `dtoverlay=pi3-disable-bt` (note, its pi3 not pi4!)
+7. Restart
+8. If you `ls /dev/` you should now see `serial0` and `serial1`
 
 
 Btw `raspi-config` didnt work for us. Even after we force installed it
@@ -191,28 +194,46 @@ Btw `raspi-config` didnt work for us. Even after we force installed it
 3. `sudo apt-get install slim`
 4. `sudo tasksel install ubuntu-mate-core` (this step takes a while)
 5. `sudo reboot`
-7. log in using the correct username and password
+6. log in using the correct username and password
 
 To disable or enable the gui, press one of `Ctrl + Alt + F1` or `Ctrl + Alt + F2` or `Ctrl + Alt + F3` . I think the first one worked for me.
 
 
 ## Install ROS NOETIC
-Run all of these lines (just paste all the lines into a terminal)
+Run all of these lines (seems like its better to run them one at a time?)
 ```
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+```
+```
 sudo apt install curl -y
+```
+```
 curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+```
+```
 sudo apt update
+```
+```
 sudo apt install ros-noetic-desktop -y
+```
+```
 echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+```
+```
 source ~/.bashrc
+```
+```
 sudo apt install python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential python3-roslaunch -y
 ```
 (this step take some time)
 
 ```
 sudo apt install python3-rosdep2 -y
+```
+```
 sudo rosdep init
+```
+```
 rosdep update
 ```
 
@@ -245,7 +266,7 @@ on a different computer when the sd card was plugged in
 
 This `.img` file is uploaded in this repo, and can be cloned for a direct copy in the future
 
-using GZIP :
+Potentially faster if you also compress it as you clone it(?):
 ```
 sudo dd bs=10M status=progress if=/dev/sdd | gzip -c --fast > ~/Devansh/raspi4_backup.img 
 ```
