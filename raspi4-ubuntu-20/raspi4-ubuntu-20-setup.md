@@ -1,4 +1,20 @@
-## Flashing a new SD card for Ubuntu server 20.04 on Raspi 4B
+# Flashing a new SD card for Ubuntu server 20.04 on Raspi 4B
+
+## SIMPLE METHOD (~1 hour)
+1. go to the lab dropbox folder, and download the sd card image `raspi4-ubuntu20.img`
+2. unzip the .gz file:
+```
+gunzip raspi4-ubuntu20.img
+```
+this will create a file about 32 gb big, and needs to be loaded onto a SD card at least 32 gb large.
+3. Open `Raspi-Imager` (https://www.raspberrypi.org/software/)
+4. Choose `Custom Image` and select the `raspi4-ubuntu20.img` file (technically you might be able to use the compressed .gz file directly, ie, skipping step 2, but it didnt work for me last time.
+5. choose the sd card, and click ok to upload it.
+
+Theoretically, this should create a new sd card that is identical to the one that is achieved by following the steps below.
+
+
+## FULL STEPS (~3 hours)
 
 On a host computer
 1. Download and install the Raspi Imager (https://www.raspberrypi.org/software/) on a host machine
