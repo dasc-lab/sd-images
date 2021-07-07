@@ -1,7 +1,7 @@
 # Flashing a new SD card for Ubuntu server 20.04 on Raspi 4B
 
 ## SIMPLE METHOD (~1 hour)
-1. go to the lab dropbox folder, and download the sd card image `raspi4-ubuntu20.img`
+1. go to the lab dropbox folder, and download the sd card image `raspi4-ubuntu20.img` (currently available at https://www.dropbox.com/s/q1g2etbq7a4hugb/raspi4_ubuntu20.img.gz?dl=0)
 2. unzip the .gz file:
 ```
 gunzip raspi4-ubuntu20.img
