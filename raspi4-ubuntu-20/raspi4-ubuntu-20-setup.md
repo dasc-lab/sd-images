@@ -82,11 +82,14 @@ now run
 ```
 sudo netplan generate
 sudo netplan apply
+systemctl daemon-reload
 ```
 this should enable wifi on the raspi. you can test it by doing
 ```
 ping google.com
 ```
+If this doesnt work, try restarting. If that still doesnt work, check spaces and capitalization.
+
 Note, this also means that you can no longer change the network from a gui. If you want to change the wifi the raspi is connected to, change the netplan file appropriately.
 
 ## Adding SSH access
