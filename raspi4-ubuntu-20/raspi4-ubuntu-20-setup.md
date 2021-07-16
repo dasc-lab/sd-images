@@ -188,8 +188,8 @@ Reload udev rules: `sudo udevadm control --reload-rules && sudo udevadm trigger`
 Btw `raspi-config` didnt work for us. Even after we force installed it
 
 ## Change the name of the computer (optional)
-1. `sudo vim /etc/hostname`
-2. change the word `ubuntu` to the desired name of the computer. The username is still `ubuntu` and when ssh-ing in, you still use `ubuntu@<ip address>`
+1. `sudo vim /etc/hostname` (or `sudo pluma /etc/hostname')
+2. change the word `ubuntu` (or whatever name appears in the file) to the desired name of the computer. The username is still `ubuntu` and when ssh-ing in, you still use `ubuntu@<ip address>`
 
 ## Adding a Lightweight Desktop Environment (Optional)
 1. sudo apt-get update && sudo apt-get upgrade
