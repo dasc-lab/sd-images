@@ -273,3 +273,15 @@ Potentially faster if you also compress it as you clone it(?):
 ```
 sudo dd bs=10M status=progress if=/dev/sdd | gzip -c --fast > ~/Devansh/raspi4_backup.img 
 ```
+
+## Issues and solutions
+## Unable to boot without monitor:
+   If raspberry pi does not boot before monitor is connected then most likely it is unable to find any hdmi output device. This is not good when raspberry pi is      used as an onboard computer on a vehicle alongside the pixhawk or any controller board. This issue can be solved by following the steps below:
+   
+   1) remove the SD card from the raspberry pi and connect the SD to a laptop or a desktop computer
+   2) open the boot partion on the SD card
+   3) open the `config.txt` file
+   4) add ``` hdmi_force_hotplug=1 ``` at the end of the `config.txt` file
+   5) save the `config.txt` file
+   6) eject the SD card and put it back on the raspberry pi board 
+   7) power the raspberry pi on and it should boot without requiring monitor to be connected
