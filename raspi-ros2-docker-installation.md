@@ -47,10 +47,12 @@ Notes:
 Either you can follow instructions on the official Docker page, or use the convenience script. Here, we use the convenience script:
 1. `curl -fsSL https://get.docker.com -o get-docker.sh`
 2. `sudo sh get-docker.sh`
+3. Set up permissions to use docker without `sudo`: `sudo groupadd docker` and `sudo usermod -aG docker $USER` and reboot
 
 To test it, run `docker run hello-world`
 
-## STEP 3: Extra steps
+## STEP 3: Extra steps to enable hardware
 
 See https://github.com/dasc-lab/sd-images/blob/main/raspi4-ubuntu-20/raspi4-ubuntu-20-setup.md for additional steps that might be necessary. 
 
+In particular, disabling uBoot, and bluetooth
