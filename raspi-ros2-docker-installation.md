@@ -34,6 +34,7 @@ I followed this guide: https://ubuntu.com/tutorials/how-to-install-ubuntu-on-you
 4. Boot the raspi. You might need to reboot it once to get it to connect to the internet/be able to ssh into it.
 5. The default user and password are `ubuntu` and `ubuntu`. At first login, it will ask you to change the password. 
 6. Change the hostname: `sudo vim /etc/hostname`, and change it `rpi9` or any unique ID you want. Now, to access the raspi, `ssh ubuntu@rpi9.local` can be used.
+7. [Optional] Disable auto-updates:  `sudo nano /etc/apt/apt.conf.d/20auto-upgrades` and change the `1` to `0`. 
 
 
 Notes:
@@ -49,4 +50,7 @@ Either you can follow instructions on the official Docker page, or use the conve
 
 To test it, run `docker run hello-world`
 
-## STEP 3: 
+## STEP 3: Extra steps
+
+See https://github.com/dasc-lab/sd-images/blob/main/raspi4-ubuntu-20/raspi4-ubuntu-20-setup.md for additional steps that might be necessary. 
+
