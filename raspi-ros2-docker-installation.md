@@ -49,7 +49,7 @@ Either you can follow instructions on the official Docker page, or use the conve
 2. `sudo sh get-docker.sh`
 3. Set up permissions to use docker without `sudo`: `sudo groupadd docker` and `sudo usermod -aG docker $USER` and reboot
 
-To test it, run `docker run hello-world`
+To test it, run `docker run hello-world` This should print a message confirming docker is working. 
 
 ## STEP 3: Extra steps to enable hardware
 
