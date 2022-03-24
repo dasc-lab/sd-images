@@ -51,6 +51,8 @@ Either you can follow instructions on the official Docker page, or use the conve
 
 To test it, run `docker run hello-world` This should print a message confirming docker is working. 
 
+4. To get ros2 galactic running, simply run `docker run osrf/ros:galactic-desktop`. The first time, it will download a bunch of necessary files, but in the future it should be super quick. 
+
 ## STEP 3: Extra steps to enable hardware
 
 See https://github.com/dasc-lab/sd-images/blob/main/raspi4-ubuntu-20/raspi4-ubuntu-20-setup.md for additional steps that might be necessary. 
